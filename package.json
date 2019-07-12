@@ -1,12 +1,28 @@
 {
   "name": "chopsticks",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest --watch"
+  "version": "0.0.1",
+  "engines": {
+    "node": ">= 10.13 <11"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^10.14.10",
+    "jest": "~24.8.0",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.0",
+    "tsutils": "~3.14.0",
+    "typescript": "~3.5.0"
+  },
+  "scripts": {
+    "clean": "rimraf coverage build tmp",
+    "build": "tsc -p tsconfig.release.json",
+    "build:watch": "tsc -w -p tsconfig.release.json",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "author": "Mickole Nulud <mickolenulud@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "~1.10.0"
+  }
 }
