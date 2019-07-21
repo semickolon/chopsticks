@@ -6,4 +6,8 @@ export default class Team {
   constructor (...players: Player[]) {
     this.players = players;
   }
+
+  isDead() {
+    return this.players.every(player => player.isDead());
+  }
 }

@@ -8,6 +8,6 @@ export default class Game {
   }
 
   async start() {
-    return 0;
+    return this.teams.findIndex(team => !team.isDead());
   }
 }
