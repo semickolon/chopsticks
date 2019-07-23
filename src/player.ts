@@ -1,3 +1,5 @@
+import Command, { GameCommand } from './command';
+
 export default class Player {
   constructor (private dead: boolean) {
 
@@ -13,5 +15,13 @@ export default class Player {
 
   isDead() {
     return this.dead;
+  }
+
+  async requestCommand(): Promise<GameCommand> {
+    return Command.none();
+  }
+
+  suicide() {
+    this.dead = true;
   }
 }

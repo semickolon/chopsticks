@@ -10,4 +10,12 @@ export default class Team {
   isDead() {
     return this.players.every(player => player.isDead());
   }
+
+  requestCommand() {
+    return this.players[0].requestCommand();
+  }
+
+  killCurrentPlayer() {
+    this.players[0].suicide();
+  }
 }
