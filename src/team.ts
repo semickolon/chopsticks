@@ -15,7 +15,7 @@ export default class Team {
     return this.players[0].requestCommand();
   }
 
-  killCurrentPlayer() {
-    this.players[0].suicide();
+  surrenderCurrentPlayer() {
+    this.players[0].surrender();
   }
 }

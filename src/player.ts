@@ -21,7 +21,7 @@ export default class Player {
     return Command.none();
   }
 
-  suicide() {
+  surrender() {
     this.dead = true;
   }
 }

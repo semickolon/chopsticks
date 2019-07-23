@@ -49,6 +49,26 @@ test('ends if only one team is left alive among three initially alive teams', as
   expect(winner).toBe(1);
 });
 
+test('ends if one team is left alive among three teams given one team dies early', async () => {
+  const players = [Player.alive(), Player.alive(), Player.alive()];
+  const teams = [new Team(players[0]), new Team(players[1]), new Team(players[2])];
+  const game = new Game(...teams);
+
+  jest.spyOn(players[0], 'requestCommand')
+    .mockResolvedValueOnce(Command.none())
+    .mockResolvedValueOnce(Command.none())
+    .mockResolvedValueOnce(Command.surrender());
+  jest.spyOn(players[1], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+  jest.spyOn(players[2], 'requestCommand')
+    .mockResolvedValueOnce(Command.none())
+    .mockResolvedValueOnce(Command.none());
+
+  const winner = await game.start();
+
+  expect(winner).toBe(2);
+});
+
 // Helper Methods and Tests
 
 function makeAliveTeam() {

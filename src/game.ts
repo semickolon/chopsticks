@@ -10,24 +10,27 @@ export default class Game {
 
   async start() {
     while (this.winner === -1) {
-      const team = this.currentTeam;
-      const command = await team.requestCommand();
-
-      if (command.type == 'surrender') {
-        team.killCurrentPlayer();
-      }
-
-      this.nextTeam();
+      await this.tick();
+      this.switchToNextTeam();
     }
 
     return this.winner;
+  }
+
+  async tick() {
+    const team = this.currentTeam;
+    const command = await team.requestCommand();
+
+    if (command.type == 'surrender') {
+      team.surrenderCurrentPlayer();
+    }
   }
 
   private get currentTeam() {
     return this.teams[this.teamIndex];
   }
 
-  private nextTeam() {
+  private switchToNextTeam() {
     this.teamIndex++;
     this.teamIndex %= this.teams.length;
   }
