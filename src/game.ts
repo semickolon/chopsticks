@@ -24,6 +24,8 @@ export default class Game {
     if (command.type == 'surrender') {
       team.surrenderCurrentPlayer();
     }
+
+    team.switchToNextPlayer();
   }
 
   private get currentTeam() {

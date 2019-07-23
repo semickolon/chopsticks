@@ -2,6 +2,7 @@ import Player from './player';
 
 export default class Team {
   private players: Player[];
+  private playerIndex = 0;
 
   constructor (...players: Player[]) {
     this.players = players;
@@ -12,10 +13,19 @@ export default class Team {
   }
 
   requestCommand() {
-    return this.players[0].requestCommand();
+    return this.currentPlayer.requestCommand();
+  }
+
+  private get currentPlayer() {
+    return this.players[this.playerIndex];
+  }
+
+  switchToNextPlayer() {
+    this.playerIndex++;
+    this.playerIndex %= this.players.length;
   }
 
   surrenderCurrentPlayer() {
-    this.players[0].surrender();
+    this.currentPlayer.surrender();
   }
 }

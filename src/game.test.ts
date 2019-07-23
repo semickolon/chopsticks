@@ -69,6 +69,49 @@ test('ends if one team is left alive among three teams given one team dies early
   expect(winner).toBe(2);
 });
 
+test('ends if one team is left alive among two teams each with two players', async () => {
+  const team1Players = [Player.alive(), Player.alive()];
+  const team2Players = [Player.alive(), Player.alive()];
+  const team1 = new Team(...team1Players);
+  const team2 = new Team(...team2Players);
+  const game = new Game(team1, team2);
+
+  jest.spyOn(team1Players[0], 'requestCommand')
+    .mockResolvedValueOnce(Command.none())
+    .mockResolvedValueOnce(Command.none());
+  jest.spyOn(team1Players[1], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+    
+  jest.spyOn(team2Players[0], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+  jest.spyOn(team2Players[1], 'requestCommand')
+    .mockResolvedValueOnce(Command.none())
+    .mockResolvedValueOnce(Command.surrender());
+
+  const winner = await game.start();
+
+  expect(winner).toBe(0);
+});
+
+test('ends if one team is left alive among two alive teams and one dead team', async () => {
+  const team1Players = [Player.alive(), Player.alive()];
+  const team3Players = [Player.alive(), Player.alive()];
+  const team1 = new Team(...team1Players);
+  const team3 = new Team(...team3Players);
+  const game = new Game(team1, makeDeadTeam(), team3);
+
+  jest.spyOn(team1Players[0], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+  jest.spyOn(team3Players[0], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+  jest.spyOn(team1Players[1], 'requestCommand')
+    .mockResolvedValueOnce(Command.surrender());
+
+  const winner = await game.start();
+
+  expect(winner).toBe(2);
+});
+
 // Helper Methods and Tests
 
 function makeAliveTeam() {
